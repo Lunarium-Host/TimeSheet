@@ -62,13 +62,13 @@ $statuses = dbRun("SELECT * FROM status");
 <script type="text/javascript">
 	var form = $('#addTask');
 	form.submit( function(){
-		$.post('action/addTask.php', form.serialize(), function(data){ window.location.reload(); } );
+		$.post('/secure/action/addTask.php', form.serialize(), function(data){ window.location.reload(); } );
 		return false;
 	} );
 
 	var company = $('#idCompany');
 	company.change(function(){
-		$.post('action/projects.php', { id : company.val() }, function( data ) {
+		$.post('/secure/action/projects.php', { id : company.val() }, function( data ) {
 			$('#idProject').html( data );
 		} );
 	} );
