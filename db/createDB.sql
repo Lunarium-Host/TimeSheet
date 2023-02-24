@@ -124,7 +124,7 @@ CREATE TABLE `user`  (
   `login` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Логин',
   `pass` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Пароль',
   `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Имя пользователя',
-  `surтame` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Отчество пользователя',
+  `surname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Отчество пользователя',
   `lastтame` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT 'Фамилия пользователя',
   `lastdate` datetime(0) NOT NULL COMMENT 'Последняя дата посещения',
   `startdate` datetime(0) NOT NULL COMMENT 'Дата добавления',
@@ -207,7 +207,7 @@ delimiter ;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO company SET active=1, name="Моя компания";
+INSERT INTO company SET active=1, code="com", name="Моя компания";
 SET @idCompany = ( SELECT LAST_INSERT_ID() ) ;
 INSERT INTO user SET idCompany=@idCompany, active=1,  admin=2, login="admin", pass=PASSWORD("admin"); 
 
