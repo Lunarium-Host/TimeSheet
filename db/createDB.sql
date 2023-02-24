@@ -200,7 +200,7 @@ DROP TRIGGER IF EXISTS `user_insert_startdate`;
 delimiter ;;
 CREATE TRIGGER `user_insert_startdate` BEFORE INSERT ON `user` FOR EACH ROW BEGIN
 	SET new.startdate = CASE WHEN new.startdate IS NULL THEN NOW() ELSE new.startdate END,
-	     new.lastDate = CASE WHEN new.lastdate  IS NULL THEN new.startdate    ELSE new.lastdate  END;
+	     new.lastdate = CASE WHEN new.lastdate  IS NULL THEN new.startdate ELSE new.lastdate END;
 END
 ;;
 delimiter ;
