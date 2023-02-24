@@ -1,19 +1,3 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : localhost
- Source Server Type    : MariaDB
- Source Server Version : 101003
- Source Host           : localhost:3306
- Source Schema         : lun.busydoc
-
- Target Server Type    : MariaDB
- Target Server Version : 101003
- File Encoding         : 65001
-
- Date: 24/02/2023 10:05:18
-*/
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -154,55 +138,11 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB COMMENT = 'Пользователи системы' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Triggers structure for table area
--- ----------------------------
-DROP TRIGGER IF EXISTS `area_insert_sort`;
-delimiter ;;
-CREATE TRIGGER `area_insert_sort` BEFORE INSERT ON `area` FOR EACH ROW BEGIN
-  SET new.sort = CASE WHEN new.sort IS NULL OR new.sort = 0 THEN ( SELECT ( count( id )+1 ) * 10 from `area` where idProject = new.idProject ) ELSE new.sort END;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table area
--- ----------------------------
-DROP TRIGGER IF EXISTS `area_insert_eventdate`;
-delimiter ;;
-CREATE TRIGGER `area_insert_eventdate` BEFORE INSERT ON `area` FOR EACH ROW BEGIN
-  SET new.eventdate = CASE WHEN new.eventdate IS NULL THEN NOW() ELSE new.eventdate END;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table areagroup
--- ----------------------------
-DROP TRIGGER IF EXISTS `areaGroup_insert_sort`;
-delimiter ;;
-CREATE TRIGGER `areaGroup_insert_sort` BEFORE INSERT ON `areagroup` FOR EACH ROW BEGIN
-  SET new.sort = CASE WHEN new.sort IS NULL OR new.sort = 0 THEN ( SELECT ( count( id )+1 ) * 10 from `areaGroup` where idArea = new.idArea ) ELSE new.sort END;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table areaoption
--- ----------------------------
-DROP TRIGGER IF EXISTS `areaOption_insert_sort`;
-delimiter ;;
-CREATE TRIGGER `areaOption_insert_sort` BEFORE INSERT ON `areaoption` FOR EACH ROW BEGIN 
-  SET new.sort = CASE WHEN new.sort IS NULL OR new.sort = 0 THEN ( SELECT ( count( id )+1 ) * 10 from `areaOption` where idAreaGroup = new.idAreaGroup ) ELSE new.sort END;
-END
-;;
-delimiter ;
-
--- ----------------------------
 -- Triggers structure for table company
 -- ----------------------------
-DROP TRIGGER IF EXISTS `company_insert_datetime`;
+DROP TRIGGER IF EXISTS `company_insert_startdate`;
 delimiter ;;
-CREATE TRIGGER `company_insert_datetime` BEFORE INSERT ON `company` FOR EACH ROW BEGIN
+CREATE TRIGGER `company_insert_startdate` BEFORE INSERT ON `company` FOR EACH ROW BEGIN
 	SET new.startdate = CASE WHEN new.startdate IS NULL THEN NOW() ELSE new.startdate END;
 END
 ;;
@@ -270,3 +210,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 INSERT INTO company SET active=1, name="Моя компания";
 SET @idCompany = ( SELECT LAST_INSERT_ID() ) ;
 INSERT INTO user SET idCompany=@idCompany, active=1,  admin=2, login="admin", pass=PASSWORD("admin"); 
+
+INSERT INTO status SET active=1, name="Создана";
+INSERT INTO status SET active=1, name="По расписанию";
+INSERT INTO status SET active=1, name="В работе";
+INSERT INTO status SET active=1, name="Тестирование";
+INSERT INTO status SET active=1, name="Решена";
+INSERT INTO status SET active=1, name="Закрыта";
