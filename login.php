@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Autocar - База данный для автосервиса</title>
-	<!-- plugins:css -->
-	<link rel="stylesheet" href="/vendors/ti-icons/css/themify-icons.css">
-	<link rel="stylesheet" href="/vendors/base/vendor.bundle.base.css">
-	<!-- endinject -->
-	<!-- plugin css for this page -->
-	<!-- End plugin css for this page -->
-	<!-- inject:css -->
-	<link rel="stylesheet" href="/css/style.css">
-	<!-- endinject -->
-	<link rel="shortcut icon" href="/images/favicon.png" />
-</head>
-
-<body>
-	<div class="container-scroller">
+<?php include('tpl/header.php'); ?>
 		<div class="container-fluid page-body-wrapper full-page-wrapper">
 			<div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
 				<div class="row flex-grow">
@@ -70,32 +49,14 @@
 									<input type='submit' class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" value='Войти'>
 								</div>
 								<div class="text-center mt-4 font-weight-light">
-								 Служба поддержки:<BR/>
-								 <a href="tel:+79787254041" class="text-primary">+7 (978) 725-40-41</a><BR/>
-								 <a href='mailto:support@zkihost.ru'>support@zkihost.ru</a>
 								</div>
 							</form>
 						</div>
 					</div>
 					<div class="col-lg-6 login-half-bg d-flex flex-row">
-						<p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2018 AutoCar.</p>
+						<p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2023 <a href="http://www.lundera.ru" target="_blank">Lundera</a>.</p>
 					</div>
 				</div>
 			</div>
-			<!-- content-wrapper ends -->
 		</div>
-		<!-- page-body-wrapper ends -->
-	</div>
-	<!-- container-scroller -->
-	<!-- plugins:js -->
-	<script src="/vendors/base/vendor.bundle.base.js"></script>
-	<!-- endinject -->
-	<!-- inject:js -->
-	<script src="/js/off-canvas.js"></script>
-	<script src="/js/hoverable-collapse.js"></script>
-	<script src="/js/template.js"></script>
-	<script src="/js/todolist.js"></script>
-	<!-- endinject -->
-</body>
-
-</html>
+<?php include('tpl/footer_web.php'); ?>

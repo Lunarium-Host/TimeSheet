@@ -16,7 +16,10 @@
 							<i class="ti-folder"></i>
 							<a href="/secure/projects/?id=<?= $line['id'] ?>"><?= $line['name'] ?></a>
 						</h3>
-						<p class="card-description text-right"><a href="javascript:editCompany(<?= $line['id'] ?>);"><i class="ti-pencil-alt"></i></a></p>
+						<div class="card-description">
+							<p class="float-left"><a href="/secure/users/?id=<?= $line['id'] ?>"><i class="ti-user"></i></a></p>
+							<p class="float-right"><a href="javascript:editCompany(<?= $line['id'] ?>);"><i class="ti-pencil-alt"></i></a></p>
+						</div>
 					</div>
 <?php } ?>
 				</div>

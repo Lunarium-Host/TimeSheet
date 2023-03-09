@@ -1,20 +1,40 @@
 <?php 
 	include('../tpl/header_secure.php'); 
 	global $user; 
-	$tasks = dbRun("SELECT t.*,
-			DATE_FORMAT( t.createdate, '%d/%m/%Y') createdate,
-			DATE_FORMAT( t.startdate, '%d/%m/%Y') startdate,
-			DATE_FORMAT( t.enddatePlan, '%d/%m/%Y') enddatePlan,
-			DATE_FORMAT( t.enddate, '%d/%m/%Y') enddate,
-			p.name projectName,
-			c.name companyName
-		FROM task t
-			LEFT JOIN project p ON p.id = t.idProject 
-			LEFT JOIN company c ON c.id = p.idCompany
-		WHERE 
-			t.enddate IS NULL AND
-			t.idPeriod IS NULL
-	")
+	if ( $user['admin'] == 2 ) {
+		$tasks = dbRun("SELECT t.*,
+				DATE_FORMAT( t.createdate, '%d/%m/%Y') createdate,
+				DATE_FORMAT( t.startdate, '%d/%m/%Y') startdate,
+				DATE_FORMAT( t.enddatePlan, '%d/%m/%Y') enddatePlan,
+				DATE_FORMAT( t.enddate, '%d/%m/%Y') enddate,
+				p.name projectName,
+				c.name companyName
+			FROM task t
+				LEFT JOIN project p ON p.id = t.idProject 
+				LEFT JOIN company c ON c.id = p.idCompany
+			WHERE 
+				t.enddate IS NULL AND
+				t.idPeriod IS NULL
+		");
+	}
+	else {
+		$tasks = dbRun("SELECT t.*,
+				DATE_FORMAT( t.createdate, '%d/%m/%Y') createdate,
+				DATE_FORMAT( t.startdate, '%d/%m/%Y') startdate,
+				DATE_FORMAT( t.enddatePlan, '%d/%m/%Y') enddatePlan,
+				DATE_FORMAT( t.enddate, '%d/%m/%Y') enddate,
+				p.name projectName,
+				c.name companyName
+			FROM task t
+				LEFT JOIN project p ON p.id = t.idProject 
+				LEFT JOIN company c ON c.id = p.idCompany
+			WHERE 
+				t.enddate IS NULL AND
+				t.idPeriod IS NULL AND
+				p.idCompany = ?
+		", 'i', $user['idCompany'] );
+	}
+	
 ?>
 <div class="row">
 	<div class="col-12 card">
@@ -23,7 +43,9 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
+<?php if ( $user['admin'] == 2 ) { ?>
 						<th>Компания</th>
+<?php } ?>
 						<th>Проект</th>
 						<th>Наименование</th>
 						<th>Дата добавления</th>
@@ -37,7 +59,9 @@
 <?php } ?>
 <?php foreach( $tasks as $line ) { ?>
 					<tr>
+<?php if ( $user['admin'] == 2 ) { ?>
 						<td><?= $line['companyName'] ?></td>
+<?php } ?>
 						<td><?= $line['projectName'] ?></td>
 						<td><?= $line['name'] ?></td>
 						<td><?= $line['createdate'] ?></td>

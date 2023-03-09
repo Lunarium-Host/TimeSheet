@@ -1,6 +1,10 @@
 <?php include( '../../lib/secure.php'); 
-global $user; 
-$companies = dbRun("SELECT * FROM company ORDER BY name");
+global $user;
+if ( $user['admin'] == 2 ) {
+	$companies = dbRun("SELECT * FROM company ORDER BY name");	
+} else {
+	$projects = dbRun("SELECT * FROM project WHERE idCompany=? ORDER BY name", 'i', $user['idCompany'] );
+}
 $statuses = dbRun("SELECT * FROM status");
 ?>
 <FORM method="POST" id="addTask">
@@ -9,17 +13,25 @@ $statuses = dbRun("SELECT * FROM status");
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	</div>
 	<div class="modal-body">
+<?php if( $user['admin'] == 2 ) { ?> 
 		<div class="form-group">
 			<label for="idCompany">Компания:</label>
 			<select name="idCompany" id="idCompany" class="form-control">
-<?php foreach( $companies as $line ) { ?>
-	<option value="<?= $line['id'] ?>"><?= $line[name] ?></option>
-<?php } ?>
+	<?php foreach( $companies as $line ) { ?>
+		<option value="<?= $line['id'] ?>"><?= $line['name'] ?></option>
+	<?php } ?>
 			</select>
 		</div>
+<?php } ?>
 		<div class="form-group">
 			<label for="idProject">Проект:</label>
-			<select name="idProject" id="idProject" class="form-control"></select>
+			<select name="idProject" id="idProject" class="form-control">
+<?php if ( $user['admin'] != 2 ) { ?>
+	<?php foreach( $projects as $line ) { ?>
+		<option value="<?= $line['id'] ?>"><?= $line['name'] ?></option>
+	<?php } ?>
+<?php } ?>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="idStatus">Статус:</label>

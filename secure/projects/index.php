@@ -33,6 +33,7 @@
 	GROUP BY p.id", 'i', $idCompany );
 ?>
 <div class="row">
+<?php if ( $user['admin'] == 2 ) { ?>
 	<div class="col-lg-12 grid-margin">
 		<div class="card">
 			<div class="card-body row">
@@ -51,7 +52,7 @@
 			</div>
 		</div>
 	</div>
-
+<?php } ?>
 	<div class="col-lg-12 grid-margin">
 		<div class="card">
 			<div class="card-body row">
