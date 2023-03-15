@@ -14,7 +14,7 @@
 	$idCompany = empty( $id ) ? $user['idCompany'] : $id;
 
 	dbRun("INSERT INTO user 
-		SET name=?, surname=?, lastname=?, active=?, pass=PASSWORD(?), idCompany=?, login=?", 'sssisis', 
+		SET name=?, surname=?, lastname=?, active=?, pass=MD5(?), idCompany=?, login=?", 'sssisis', 
 		$name, $surname, $lastname, $active, $pass, $idCompany, $loginis );
 
 	echo "OK";

@@ -1,32 +1,33 @@
 <?php
 global $sesId;
 if( !empty( $_POST ) && !empty( $_POST['login'] ) ) {
-	$existLogin = dbRun('select id from user where login=? and pass=password(?);', 'ss', $_POST['login'], $_POST['passwd'] ) ; //
+	$existLogin = dbRun('SELECT id FROM user WHERE login=? AND pass=MD5(?);', 
+		'ss', $_POST['login'], $_POST['passwd'] ) ; //
 	if ( empty( $existLogin ) ) { header('Location: /login.php?auth=bad'); die(); }
 	$existLogin = $existLogin[0];
-	dbRun( "update session set idUser=? where id=?", 'ss' , $existLogin['id'], $sesId );
+	dbRun( "UPDATE session SET idUser=? WHERE id=?", 'ss' , $existLogin['id'], $sesId );
 	header('Location: /secure/');
 	die(); 
 }
 $user = dbRun("
-	select
+	SELECT
 		u.*, 
 		c.`name` companyName,
 		c.*,
 		u.id id
-	from 
+	FROM 
 		user u,
 		session s, 
 		company c
-	where 
-		u.id=s.idUser
-		and c.id=u.idCompany
-		and s.id=?
-		and u.active=1", 's', $sesId );
+	WHERE 
+		u.id=s.idUser AND 
+		c.id=u.idCompany AND 
+		s.id=? AND 
+		u.active=1", 's', $sesId );
 if ( empty( $user ) ) { header('Location: /login.php'); die(); }
 
 if( ! empty( $_GET ) && ! empty( $_GET["logout"] ) ){
-	dbRun("update session set idUser=NULL where id=?", 's', $sesId );
+	dbRun("UPDATE session SET idUser=NULL WHERE id=?", 's', $sesId );
 	header( "Location: /logout.php");
 	die();
 }

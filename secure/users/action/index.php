@@ -16,7 +16,7 @@
 		$name, $surname, $lastname, $active, $id );
 
 	if( ! empty( $pass ) ) {
-		dbRun("UPDATE user set pass=PASSWORD(?) WHERE id=?", 'si', $pass, $id );
+		dbRun("UPDATE user set pass=MD5(?) WHERE id=?", 'si', $pass, $id );
 	}
 
 	echo "OK";

@@ -85,4 +85,29 @@ $statuses = dbRun("SELECT * FROM status");
 		} );
 	} );
 	company.change();
+
+	$('#startdate').datetimepicker({
+      uiLibrary: 'bootstrap4',
+      modal: true,
+      footer: true,
+      format: 'yyyy-mm-dd HH:MM:00',
+      // minDate: today
+      // locale: 'ru-ru'
+  });
+  $('#enddatePlan').datetimepicker({
+      uiLibrary: 'bootstrap4',
+      modal: true,
+      footer: true,
+      format: 'yyyy-mm-dd HH:MM:00',
+      // minDate: today
+      // locale: 'ru-ru'
+  });
+  $('#enddate').datetimepicker({
+      uiLibrary: 'bootstrap4',
+      modal: true,
+      footer: true,
+      format: 'yyyy-mm-dd HH:MM:00',
+      // minDate: today
+      // locale: 'ru-ru'
+  });
 </script>
