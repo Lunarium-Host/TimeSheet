@@ -209,7 +209,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO company SET active=1, code="com", name="Моя компания";
 SET @idCompany = ( SELECT LAST_INSERT_ID() ) ;
-INSERT INTO user SET idCompany=@idCompany, active=1,  admin=2, login="admin", pass=PASSWORD("admin"); 
+INSERT INTO user SET idCompany=@idCompany, active=1,  admin=2, login="admin", pass=MD5("admin"); 
 
 INSERT INTO status SET active=1, name="Создана";
 INSERT INTO status SET active=1, name="По расписанию";
