@@ -43,27 +43,59 @@ $statuses = dbRun("SELECT * FROM status");
 		</div>
 		<div class="form-group">
 			<label for="name">Имя:</label>
-			<input id="name" name="name" placeholder="Имя" type="text" class="form-control">
+			<input id="name" 
+				name="name" 
+				placeholder="Имя" 
+				type="text" 
+				data-rule="{val}.length > 0"
+				class="form-control">
+			<div class="invalid-feedback">
+				Поле не может быть пустым.
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="about">Описание:</label>
-			<textarea id="about" name="about" placeholder="Описание" class="form-control"></textarea>
+			<textarea id="about" 
+				name="about" 
+				placeholder="Описание" 
+				class="form-control"></textarea>
 		</div>
 		<div class="form-group">
 			<label for="spend">Кол-во часов:</label>
-			<input id="spend" name="spend" placeholder="Кол-во часов" type="text" value="0" class="form-control">
+			<input id="spend" 
+				name="spend" 
+				placeholder="Кол-во часов"
+				type="text" 
+				value="0"
+				data-rule="! isNaN({val})" 
+				class="form-control">
+			<div class="invalid-feedback">
+				Должно быть число
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="startdate">Дата старта:</label>
-			<input id="startdate" name="startdate" placeholder="Дата старта" type="text" class="form-control">
+			<input id="startdate" 
+				name="startdate" 
+				placeholder="Дата старта" 
+				type="text" 
+				class="form-control">
 		</div>
 		<div class="form-group">
 			<label for="enddatePlan">Плановая дата завершения:</label>
-			<input id="enddatePlan" name="enddatePlan" placeholder="Плановая дата завершения" type="text" class="form-control">
+			<input id="enddatePlan" 
+				name="enddatePlan" 
+				placeholder="Плановая дата завершения" 
+				type="text"
+				class="form-control">
 		</div>
 		<div class="form-group">
 			<label for="enddate">Дата завершения:</label>
-			<input id="enddate" name="enddate" placeholder="Дата завершения" type="text" class="form-control">
+			<input id="enddate"
+				name="enddate"
+				placeholder="Дата завершения"
+				type="text"
+				class="form-control">
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -73,12 +105,11 @@ $statuses = dbRun("SELECT * FROM status");
 </FORM>
 <script type="text/javascript">
 	var form = $('#addTask');
-	form.submit( function(){
-		$.post('/secure/action/addTask.php', form.serialize(), function(data){ window.location.reload(); } );
-		return false;
-	} );
 
-	var company = $('#idCompany');
+	form.find('input,select,textarea').each( function() { 
+		__attachValidationHandler( $(this) ); } );
+	
+	var company = form.find('#idCompany');
 	company.change(function(){
 		$.post('/secure/action/projects.php', { id : company.val() }, function( data ) {
 			$('#idProject').html( data );
@@ -86,7 +117,7 @@ $statuses = dbRun("SELECT * FROM status");
 	} );
 	company.change();
 
-	$('#startdate').datetimepicker({
+	form.find('#startdate').datetimepicker({
       uiLibrary: 'bootstrap4',
       modal: true,
       footer: true,
@@ -94,7 +125,7 @@ $statuses = dbRun("SELECT * FROM status");
       // minDate: today
       // locale: 'ru-ru'
   });
-  $('#enddatePlan').datetimepicker({
+  form.find('#enddatePlan').datetimepicker({
       uiLibrary: 'bootstrap4',
       modal: true,
       footer: true,
@@ -102,7 +133,7 @@ $statuses = dbRun("SELECT * FROM status");
       // minDate: today
       // locale: 'ru-ru'
   });
-  $('#enddate').datetimepicker({
+  form.find('#enddate').datetimepicker({
       uiLibrary: 'bootstrap4',
       modal: true,
       footer: true,
@@ -110,4 +141,11 @@ $statuses = dbRun("SELECT * FROM status");
       // minDate: today
       // locale: 'ru-ru'
   });
+
+  form.submit( function(){
+  	if ( form.find('.is-invalid').length > 0 ) { return false; }
+		$.post('/secure/action/addTask.php', form.serialize(), function(data){ window.location.reload(); } );
+		return false;
+	} );
+
 </script>

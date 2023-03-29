@@ -1,7 +1,7 @@
 <?php
 global $sesId;
 if( !empty( $_POST ) && !empty( $_POST['login'] ) ) {
-	$existLogin = dbRun('SELECT id FROM user WHERE login=? AND pass=MD5(?);', 
+	$existLogin = dbRun('SELECT id FROM user WHERE login=? AND pass=MD5(?) AND active=1', 
 		'ss', $_POST['login'], $_POST['passwd'] ) ; //
 	if ( empty( $existLogin ) ) { header('Location: /login.php?auth=bad'); die(); }
 	$existLogin = $existLogin[0];
@@ -11,9 +11,9 @@ if( !empty( $_POST ) && !empty( $_POST['login'] ) ) {
 }
 $user = dbRun("
 	SELECT
+		c.*,
 		u.*, 
 		c.`name` companyName,
-		c.*,
 		u.id id
 	FROM 
 		user u,
@@ -22,7 +22,7 @@ $user = dbRun("
 	WHERE 
 		u.id=s.idUser AND 
 		c.id=u.idCompany AND 
-		s.id=? AND 
+		s.id=? AND
 		u.active=1", 's', $sesId );
 if ( empty( $user ) ) { header('Location: /login.php'); die(); }
 

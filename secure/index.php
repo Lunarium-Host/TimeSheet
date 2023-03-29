@@ -15,6 +15,7 @@
 			WHERE 
 				t.enddate IS NULL AND
 				t.idPeriod IS NULL
+			ORDER BY t.createdate DESC
 		");
 	}
 	else {
@@ -32,6 +33,7 @@
 				t.enddate IS NULL AND
 				t.idPeriod IS NULL AND
 				p.idCompany = ?
+			ORDER BY t.createdate DESC
 		", 'i', $user['idCompany'] );
 	}
 	

@@ -7,19 +7,48 @@
 	<div class="modal-body">
 		<div class="form-group">
 			<label for="code">Код:</label>
-			<input id="code" name="code" placeholder="Код" type="text" class="form-control">
+			<input id="code" 
+				name="code" 
+				placeholder="Код" 
+				type="text" 
+				data-rule="{val}.length > 0"
+				class="form-control">
+			<div class="invalid-feedback">
+				Код используется для обозначения, придумайте код.
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="name">Имя:</label>
-			<input id="name" name="name" placeholder="Имя" value="" type="text" class="form-control">
+			<input id="name" 
+				name="name" 
+				placeholder="Имя" 
+				value="" 
+				type="text" 
+				data-rule="{val}.length > 0"
+				class="form-control">
+			<div class="invalid-feedback">
+				Должно быть введено наименование компании.
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="about">Описание:</label>
-			<textarea id="about" name="about" placeholder="Описание" class="form-control"></textarea>
+			<textarea id="about" 
+				name="about" 
+				placeholder="Описание" 
+				class="form-control"></textarea>
 		</div>
 		<div class="form-group">
 			<label for="price">Цена:</label>
-			<input id="price" name="price" placeholder="Цена" type="text" class="form-control">
+			<input id="price" 
+				name="price" 
+				placeholder="Цена" 
+				type="text" 
+				data-rule="! isNaN({val})"
+				value="0"
+				class="form-control">
+			<div class="invalid-feedback">
+				Должно быть число, либо 0.
+			</div>
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -29,7 +58,12 @@
 </FORM>
 <script type="text/javascript">
 	var form = $('#addCompany');
+
+	form.find('input,select,textarea').each( function() { 
+		__attachValidationHandler( $(this) ); } );
+
 	form.submit( function(){
+		if ( form.find('.is-invalid').length > 0 ) { return false; }
 		$.post('action/add.php', form.serialize(), function(data){ window.location.reload(); } );
 		return false;
 	} );

@@ -9,9 +9,9 @@
 			<div class="card-body">
 				<p class="float-right"><a href="javascript:addCompany();" class="badge badge-warning">Добавить</a></p>
 				<h4 class="card-title">Компании</h4>
-				<div class="card-description row">
+				<div class="card-description row d-flex justify-content-between">
 <?php foreach ( $companies as $line ) { ?>
-					<div class="card col-3 mb-2 mr-2 p-2">
+					<div class="card col-3 p-2">
 						<h3 class="card-title">
 							<i class="ti-folder"></i>
 							<a href="/secure/projects/?id=<?= $line['id'] ?>"><?= $line['name'] ?></a>

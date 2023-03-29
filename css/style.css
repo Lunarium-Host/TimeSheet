@@ -21364,4 +21364,12 @@ dl li {
   outline: 1px solid slategrey;
 }
 
+.modal-body .form-group input[type="checkbox"] {
+  margin-left: 5px;
+}
+
+.modal-body .form-group input[type="checkbox"] ~ label {
+  margin-left: 20px;
+}
+
 /*# sourceMappingURL=maps/style.css.map */

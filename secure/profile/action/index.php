@@ -10,7 +10,7 @@
 	dbRun("UPDATE user SET name=?, surname=?, lastname=? WHERE id=?", 'sssi', $name, $surname, $lastname, $id );
 
 	if( ! empty( $pass ) ) {
-		dbRun("UPDATE user set pass=PASSWORD(?) WHERE id=?", 'si', $pass, $id );
+		dbRun("UPDATE user set pass=MD5(?) WHERE id=?", 'si', $pass, $id );
 	}
 
 	header("Location:../../profile/");

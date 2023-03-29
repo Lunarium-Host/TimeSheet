@@ -9,7 +9,7 @@
 <FORM method="POST" id="addTask">
 	<input type="hidden" name="id" value="<?= $idProject ?>">
 	<div class="modal-header">
-		<h5 class="modal-title">Редактор задачи</h5>
+		<h5 class="modal-title">Добавление задачи в проект <?= $project['name'] ?></h5>
 		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	</div>
 	<div class="modal-body">
@@ -23,27 +23,59 @@
 		</div>
 		<div class="form-group">
 			<label for="name">Имя:</label>
-			<input id="name" name="name" placeholder="Имя" type="text" class="form-control">
+			<input id="name" 
+				name="name" 
+				placeholder="Имя" 
+				type="text" 
+				data-rule="{val}.length > 0"
+				class="form-control">
+			<div class="invalid-feedback">
+				Поле не может быть пустым.
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="about">Описание:</label>
-			<textarea id="about" name="about" placeholder="Описание" class="form-control"></textarea>
+			<textarea id="about" 
+				name="about" 
+				placeholder="Описание" 
+				class="form-control"></textarea>
 		</div>
 		<div class="form-group">
 			<label for="spend">Кол-во часов:</label>
-			<input id="spend" name="spend" placeholder="Кол-во часов" type="text" value="0" class="form-control">
+			<input id="spend" 
+				name="spend" 
+				placeholder="Кол-во часов" 
+				type="text" 
+				value="0" 
+				data-rule="! isNaN({val})" 
+				class="form-control">
+			<div class="invalid-feedback">
+				Должно быть число
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="startdate">Дата старта:</label>
-			<input id="startdate" name="startdate" placeholder="Дата старта" type="text" class="form-control">
+			<input id="startdate" 
+				name="startdate" 
+				placeholder="Дата старта" 
+				type="text" 
+				class="form-control">
 		</div>
 		<div class="form-group">
 			<label for="enddatePlan">Плановая дата завершения:</label>
-			<input id="enddatePlan" name="enddatePlan" placeholder="Плановая дата завершения" type="text" class="form-control">
+			<input id="enddatePlan" 
+				name="enddatePlan" 
+				placeholder="Плановая дата завершения" 
+				type="text" 
+				class="form-control">
 		</div>
 		<div class="form-group">
 			<label for="enddate">Дата завершения:</label>
-			<input id="enddate" name="enddate" placeholder="Дата завершения" type="text" class="form-control">
+			<input id="enddate" 
+				name="enddate" 
+				placeholder="Дата завершения" 
+				type="text" 
+				class="form-control">
 		</div>
 	</div>
 	<div class="modal-footer">
@@ -52,33 +84,39 @@
 	</div>
 </FORM>
 <script type="text/javascript">
-	$('#startdate').datetimepicker({
-      uiLibrary: 'bootstrap4',
-      modal: true,
-      footer: true,
-      format: 'yyyy-mm-dd HH:MM:00',
-      // minDate: today
-      // locale: 'ru-ru'
-  });
-  $('#enddatePlan').datetimepicker({
-      uiLibrary: 'bootstrap4',
-      modal: true,
-      footer: true,
-      format: 'yyyy-mm-dd HH:MM:00',
-      // minDate: today
-      // locale: 'ru-ru'
-  });
-  $('#enddate').datetimepicker({
-      uiLibrary: 'bootstrap4',
-      modal: true,
-      footer: true,
-      format: 'yyyy-mm-dd HH:MM:00',
-      // minDate: today
-      // locale: 'ru-ru'
-  });
 	var form = $('#addTask');
-	form.submit( function(){
-		$.post('action/add.php', form.serialize(), function(data){ window.location.reload(); } );
+
+	form.find('#startdate').datetimepicker({
+      uiLibrary: 'bootstrap4',
+      modal: true,
+      footer: true,
+      format: 'yyyy-mm-dd HH:MM:00',
+      // minDate: today
+      // locale: 'ru-ru'
+  });
+  form.find('#enddatePlan').datetimepicker({
+      uiLibrary: 'bootstrap4',
+      modal: true,
+      footer: true,
+      format: 'yyyy-mm-dd HH:MM:00',
+      // minDate: today
+      // locale: 'ru-ru'
+  });
+  form.find('#enddate').datetimepicker({
+      uiLibrary: 'bootstrap4',
+      modal: true,
+      footer: true,
+      format: 'yyyy-mm-dd HH:MM:00',
+      // minDate: today
+      // locale: 'ru-ru'
+  });
+
+  form.find('input,select,textarea').each( function() { 
+		__attachValidationHandler( $(this) ); } );
+	
+	form.submit( function() {
+		if ( form.find('.is-invalid').length > 0 ) { return false; }
+		$.post('action/add.php', form.serialize(), function(data) { window.location.reload(); } );
 		return false;
 	} );
 </script>

@@ -33,7 +33,7 @@
 		<div class="card">
 			<div class="card-body row">
 				<h4 class="card-title col-6">Задачи</h4>
-				<p class="text-right col-6"><a href="javascript:addTask();" class="badge badge-warning">Добавить</a></p>
+				<p class="text-right col-6"><a href="javascript:addTaskToProject();" class="badge badge-warning">Добавить</a></p>
 					
 				<DIV class="card-description table-responsive">
 					<table class="table table-hover">
@@ -75,7 +75,7 @@
 			function( data ) { dialog1.content( data ).modal('show'); } 
 	); }
 
-	function addTask() {
+	function addTaskToProject() {
 		$.post('modal/add.php', { id : <?= $idProject ?>},
 			function( data ) { dialog1.content( data ).modal('show'); }
 	); }
